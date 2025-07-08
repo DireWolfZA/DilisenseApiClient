@@ -18,6 +18,7 @@ namespace DilisenseApi.Actions {
 
         // https://developers.dilisense.com/#2-checkindividual-get
         public async Task<CollectionResponse<Individual>> Individual(string query, bool searchAll = false, int? fuzzySearch = null, string? dob = null, string? gender = null, string? includes = null) {
+            Utils.Utils.RequireArgument(nameof(query), query);
             var request = new RestRequest("checkIndividual", Method.Get)
                 .AddParameter(searchAll ? "search_all" : "names", query);
 
@@ -35,6 +36,7 @@ namespace DilisenseApi.Actions {
 
         // https://developers.dilisense.com/#4-checkentity-get
         public async Task<CollectionResponse<Entity>> Entity(string query, bool searchAll = false, int? fuzzySearch = null, string? includes = null) {
+            Utils.Utils.RequireArgument(nameof(query), query);
             var request = new RestRequest("checkEntity", Method.Get)
                 .AddParameter(searchAll ? "search_all" : "names", query);
 
