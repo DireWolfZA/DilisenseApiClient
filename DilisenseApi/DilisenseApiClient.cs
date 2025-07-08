@@ -1,8 +1,10 @@
 using System;
+using DilisenseApi.Actions;
 using RestSharp;
 
 namespace DilisenseApi {
     public interface IDilisenseApiClient {
+        ICheckActions Check { get; }
     }
 
     public class DilisenseApiClient : IDilisenseApiClient {
@@ -16,5 +18,7 @@ namespace DilisenseApi {
             client.AddDefaultHeader("Accept", "application/json");
             client.AddDefaultHeader("X-API-Key", apikey);
         }
+
+        public ICheckActions Check => new CheckActions(client);
     }
 }
