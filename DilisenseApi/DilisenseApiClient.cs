@@ -5,6 +5,7 @@ using RestSharp;
 namespace DilisenseApi {
     public interface IDilisenseApiClient {
         ICheckActions Check { get; }
+        IReportActions GenerateReport { get; }
     }
 
     public class DilisenseApiClient : IDilisenseApiClient {
@@ -20,5 +21,6 @@ namespace DilisenseApi {
         }
 
         public ICheckActions Check => new CheckActions(client);
+        public IReportActions GenerateReport => new ReportActions(client);
     }
 }
