@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 using DilisenseApi.Models;
 using DilisenseApi.Utils;
@@ -8,6 +9,7 @@ namespace DilisenseApi.Actions {
     public interface ICheckActions {
         Task<CollectionResponse<Individual>> Individual(string query, bool searchAll = false, int? fuzzySearch = null, string? dob = null, string? gender = null, string? includes = null);
         Task<CollectionResponse<Entity>> Entity(string query, bool searchAll = false, int? fuzzySearch = null, string? includes = null);
+        Task<CollectionResponse<ResponseItem>> Name(string query, bool searchAll = false, int? fuzzySearch = null, string? includes = null);
     }
 
     public class CheckActions : ICheckActions {
@@ -46,6 +48,26 @@ namespace DilisenseApi.Actions {
                 request.AddParameter("includes", includes);
 
             return RestResponseHandler.Handle(await client.ExecuteAsync<CollectionResponse<Entity>>(request, Method.Get));
+        }
+
+        // https://developers.dilisense.com/#6-checkname-get
+        public async Task<CollectionResponse<ResponseItem>> Name(string query, bool searchAll = false, int? fuzzySearch = null, string? includes = null) {
+            Utils.Utils.RequireArgument(nameof(query), query);
+            var request = new RestRequest("checkName", Method.Get)
+                .AddParameter(searchAll ? "search_all" : "names", query);
+
+            if (fuzzySearch != null)
+                request = request.AddParameter("fuzzy_search", (int)fuzzySearch);
+            if (includes != null)
+                request.AddParameter("includes", includes);
+
+            var response = RestResponseHandler.Handle(await client.ExecuteAsync<CollectionResponse<CheckNameResponseItem>>(request, Method.Get));
+
+            return new CollectionResponse<ResponseItem>() {
+                Timestamp = response.Timestamp,
+                TotalHits = response.TotalHits,
+                FoundRecords = response.FoundRecords?.Select(r => r.ToResponseItem()).ToList(),
+            };
         }
     }
 }
