@@ -1,6 +1,8 @@
 using System;
+using System.Text.Json;
 using DilisenseApi.Actions;
 using RestSharp;
+using RestSharp.Serializers.Json;
 
 namespace DilisenseApi {
     public interface IDilisenseApiClient {
@@ -15,7 +17,12 @@ namespace DilisenseApi {
             if (apikey == null)
                 throw new ArgumentNullException(nameof(apikey));
 
-            client = new RestClient("https://api.dilisense.com/v1");
+            client = new RestClient("https://api.dilisense.com/v1", configureSerialization: config => config.UseSystemTextJson(new JsonSerializerOptions(JsonSerializerDefaults.Web) {
+                Converters = { // deserialize string values as enums - dilisense API sends as uppersnakecase
+                    new System.Text.Json.Serialization.JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseUpper),
+                },
+            }));
+
             client.AddDefaultHeader("Accept", "application/json");
             client.AddDefaultHeader("X-API-Key", apikey);
         }

@@ -1,3 +1,4 @@
+using System;
 using RestSharp;
 
 namespace DilisenseApi.Utils {
@@ -6,7 +7,7 @@ namespace DilisenseApi.Utils {
             if (response.ErrorException != null)
                 throw response.ErrorException.WithContent(response.Content);
             if (response.Data == null)
-                throw new System.ApplicationException("Empty Data!").WithContent(response.Content);
+                throw new ApplicationException("Empty Data!").WithContent(response.Content);
             return response.Data;
         }
 
@@ -14,8 +15,8 @@ namespace DilisenseApi.Utils {
             if (response.ErrorException != null)
                 throw response.ErrorException.WithContent(response.Content);
             if (!response.IsSuccessStatusCode)
-                throw new System.ApplicationException("Error Response! Code: " + response.StatusCode).WithContent(response.Content);
-            return System.Convert.FromBase64String(response.Content);
+                throw new ApplicationException("Error Response! Code: " + response.StatusCode).WithContent(response.Content);
+            return Convert.FromBase64String(response.Content);
         }
     }
 }
