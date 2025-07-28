@@ -14,8 +14,7 @@ namespace DilisenseApi {
         private readonly RestClient client;
 
         public DilisenseApiClient(string apikey) {
-            if (apikey == null)
-                throw new ArgumentNullException(nameof(apikey));
+            Utils.Utils.RequireArgument(nameof(apikey), string.IsNullOrWhiteSpace(apikey) ? null : apikey);
 
             client = new RestClient("https://api.dilisense.com/v1", configureSerialization: config => config.UseSystemTextJson(new JsonSerializerOptions(JsonSerializerDefaults.Web) {
                 Converters = { // deserialize string values as enums - dilisense API sends as uppersnakecase
