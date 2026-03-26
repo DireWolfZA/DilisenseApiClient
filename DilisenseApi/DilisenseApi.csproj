@@ -11,6 +11,7 @@
     <Title>Dilisense API Client</Title>
     <Description>A C# wrapper for the Dilisense AML API</Description>
     <Authors>Dire Wolf</Authors>
+    <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://developers.dilisense.com</PackageProjectUrl>
@@ -20,10 +21,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\logo.png" Pack="true" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
