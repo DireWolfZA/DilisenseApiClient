@@ -9,7 +9,7 @@
   <PropertyGroup>
     <PackageId>DireWolf.DilisenseApi</PackageId>
     <Title>Dilisense API Client</Title>
-    <Description>A C# wrapper for the Dilisense AML API</Description>
+    <Description>API Client for the Dilisense AML API</Description>
     <Authors>Dire Wolf</Authors>
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
@@ -28,7 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
     <PackageReference Include="RestSharp" Version="114.0.0" />
-    <PackageReference Include="System.Text.Json" Version="10.0.5" />
+    <PackageReference Include="System.Text.Json" Version="10.0.10" />
   </ItemGroup>
 
 </Project>
